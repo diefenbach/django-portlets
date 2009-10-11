@@ -1,2 +1,3 @@
 include README.txt
-recursive-include lfs/templates *
+recursive-include portlets/templates *
+recursive-include portlets/example/templates *
