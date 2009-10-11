@@ -1,0 +1,7 @@
+{% if portlets %}
+    {% for portlet in portlets %}
+        {# {{ portlet.render }} #}
+        {{ portlet|safe }}
+
+    {% endfor %}
+{% endif %}
