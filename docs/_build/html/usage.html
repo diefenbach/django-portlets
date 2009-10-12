@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Usage &mdash; django-portlets v0.3.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-portlets v0.3.0 documentation" href="index.html" />
+    <link rel="next" title="Example" href="example.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="example.html" title="Example"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-portlets v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>In order to use django portlets you first have to implement a portlet. This is
+done by inheriting from the provided base class, for instance:</p>
+<div class="section" id="create-a-portlet">
+<h2>Create a portlet<a class="headerlink" href="#create-a-portlet" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s create a simple text portlet:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># django imports</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">portlets.models</span> <span class="kn">import</span> <span class="n">Portlet</span>
+
+<span class="k">class</span> <span class="nc">TextPortlet</span><span class="p">(</span><span class="n">Portlet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple portlet to display some text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">u&quot;Text&quot;</span><span class="p">),</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Renders the portlet as html.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s">&quot;portlets/text_portlet.html&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">&quot;title&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+            <span class="s">&quot;text&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+        <span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TextPortletForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TextPortletForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Form for the TextPortlet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">TextPortlet</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-the-portlet">
+<h2>Register the portlet<a class="headerlink" href="#register-the-portlet" title="Permalink to this headline">¶</a></h2>
+<p>In order to make it available for selection, the portlet has to be registered
+(make sure that this is called, when django starts up):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">portlets.utils</span> <span class="kn">import</span> <span class="n">register_portlet</span>
+<span class="n">register_portlet</span><span class="p">(</span><span class="n">TextPortlet</span><span class="p">,</span> <span class="s">&quot;TextPortlet&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To display portlets within your templates, just use the provided portlet_slot
+tag, e.g.:</p>
+<div class="highlight-python"><pre>{% load portlets_tags %}
+
+&lt;table&gt;
+     &lt;tr&gt;
+         &lt;td&gt;
+             {% portlet_slot 'Left' flatpage %}
+         &lt;/td&gt;
+         &lt;td&gt;
+             Content goes here.
+         &lt;/td&gt;
+         &lt;td&gt;
+             {% portlet_slot 'Right' flatpage %}
+         &lt;/td&gt;
+     &lt;/tr&gt;
+&lt;/table&gt;</pre>
+</div>
+</div>
+<div class="section" id="assign-the-portlet-to-content">
+<h2>Assign the portlet to content<a class="headerlink" href="#assign-the-portlet-to-content" title="Permalink to this headline">¶</a></h2>
+<p>Now go to the admin interface and add a Slot, e.g. &#8220;Left&#8221; and a TextPortlet
+(assuming you have it registered for the django&#8217;s admin application). Now you
+can assign the portlet (via PortletAssignment) to any content object.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Usage</a><ul>
+<li><a class="reference external" href="#create-a-portlet">Create a portlet</a></li>
+<li><a class="reference external" href="#register-the-portlet">Register the portlet</a></li>
+<li><a class="reference external" href="#assign-the-portlet-to-content">Assign the portlet to content</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="installation.html"
+                                  title="previous chapter">Installation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="example.html"
+                                  title="next chapter">Example</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/usage.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="example.html" title="Example"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">django-portlets v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Kai Diefenbach.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>
