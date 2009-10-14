@@ -61,7 +61,10 @@ def has_portlets(slot, obj):
             return True
         if is_blocked(obj, slot):
             break
-        obj = obj.get_parent_for_portlets()
+        try:
+            obj = obj.get_parent_for_portlets()
+        except AttributeError:
+            break
 
     return False
 
