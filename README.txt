@@ -1,18 +1,20 @@
 What is it?
 ===========
 
-Portlets are pieces of content which are managed in Slots. Slots can be freely defined and placed 
-anywhere within a HTML page. There are also some more advanced features like inheriting and blocking 
-of portlets.
+*Portlets* are content objects which are managed in *Slots*. *Slots* can be freely
+defined and placed anywhere within a HTML page. There are also some more 
+advanced features like inheriting and blocking of portlets.
 
-django-portlets provides just a generic engine to manage portlets. You can find a comprehensive 
-implementation within `LFS`_.
+django-portlets provides just a generic engine to manage portlets. You can 
+find a comprehensive implementation within `LFS`_.
 
 Example
 ===========
 django-portlets comes with a simple example application which shows how to use it.
 
-.. _LFS: http://bitbucket.org/diefenbach/django-lfs
+Documentation
+=============
+For more documentation please visit: http://packages.python.org/django-portlets/
 
 Changes
 =======
@@ -39,3 +41,5 @@ Changes
 ------------------
 
 * Initial public release
+
+.. _LFS: http://bitbucket.org/diefenbach/django-lfs
