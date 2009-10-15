@@ -1,11 +1,16 @@
 What is it?
 ===========
 
-*Portlets* are content objects which are managed in *Slots*. *Slots* can be freely
-defined and placed anywhere within a HTML page. There are also some more 
-advanced features like inheriting and blocking of portlets.
+*Portlets* are content objects which are managed in *Slots*. *Slots* can be 
+freely defined and placed anywhere within a HTML page.
 
-django-portlets provides just a generic engine to manage portlets. You can 
+Portlets are usual content objects, that means they can have arbitrary fields 
+and functionalities.
+
+There are also some more advanced features like inheriting and blocking of
+portlets.
+
+django-portlets provides just a generic engine to manage portlets. You can
 find a comprehensive implementation within `LFS`_.
 
 Example
@@ -20,10 +25,11 @@ Changes
 =======
 
 0.3.2 (2009-10-15)
+------------------
 
 * Changed documentation to one page (for now)
 
-* Example TextPortlet: made context of render method optional.
+* Example TextPortlet: made ``context`` paramenter of ``render`` method optional.
 
 * Added tests for models
 
