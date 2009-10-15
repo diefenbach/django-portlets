@@ -14,7 +14,7 @@ class TextPortlet(Portlet):
     def __unicode__(self):
         return "%s" % self.id
 
-    def render(self, context):
+    def render(self, context=None):
         """Renders the portlet as html.
         """
         return render_to_string("portlets/text_portlet.html", {
