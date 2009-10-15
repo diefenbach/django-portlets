@@ -26,8 +26,7 @@ Usage
 In order to use django portlets you first have to implement a portlet. This is 
 done by inheriting from the provided base class, for instance:
 
-Create a portlet
-----------------
+**Create a portlet**
 
 Let's create a simple text portlet::
 
@@ -66,8 +65,7 @@ Let's create a simple text portlet::
         class Meta:
             model = TextPortlet
 
-Register the portlet
---------------------
+**Register the portlet**
 
 In order to make it available for selection, the portlet has to be registered 
 (make sure that this is called, when django starts up)::
@@ -94,8 +92,7 @@ tag, e.g.::
         </tr>
    </table>
 
-Assign the portlet to content
------------------------------
+**Assign the portlet to content**
 
 Now go to the admin interface and add a Slot, e.g. "Left" and a TextPortlet 
 (assuming you have it registered for the django's admin application). Now you 
@@ -109,7 +106,7 @@ sophisticated implementation please refer to `LFS`_
 
 **Installation**
 
-1. Install `flatpages`_: (flatpages serve as our example content)
+1. Install `flatpages`_ (flatpages serve as our example content)
 
 2. Add the portlets and portlets.example to INSTALLED_APPS
 

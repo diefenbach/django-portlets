@@ -58,8 +58,7 @@ a comprehensive implementation within <a class="reference external" href="http:/
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>In order to use django portlets you first have to implement a portlet. This is
 done by inheriting from the provided base class, for instance:</p>
-<div class="section" id="create-a-portlet">
-<h3>Create a portlet<a class="headerlink" href="#create-a-portlet" title="Permalink to this headline">¶</a></h3>
+<p><strong>Create a portlet</strong></p>
 <p>Let&#8217;s create a simple text portlet:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># django imports</span>
 <span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
@@ -97,9 +96,7 @@ done by inheriting from the provided base class, for instance:</p>
         <span class="n">model</span> <span class="o">=</span> <span class="n">TextPortlet</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="register-the-portlet">
-<h3>Register the portlet<a class="headerlink" href="#register-the-portlet" title="Permalink to this headline">¶</a></h3>
+<p><strong>Register the portlet</strong></p>
 <p>In order to make it available for selection, the portlet has to be registered
 (make sure that this is called, when django starts up):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">portlets.utils</span> <span class="kn">import</span> <span class="n">register_portlet</span>
@@ -124,13 +121,10 @@ tag, e.g.:</p>
      &lt;/tr&gt;
 &lt;/table&gt;</pre>
 </div>
-</div>
-<div class="section" id="assign-the-portlet-to-content">
-<h3>Assign the portlet to content<a class="headerlink" href="#assign-the-portlet-to-content" title="Permalink to this headline">¶</a></h3>
+<p><strong>Assign the portlet to content</strong></p>
 <p>Now go to the admin interface and add a Slot, e.g. &#8220;Left&#8221; and a TextPortlet
 (assuming you have it registered for the django&#8217;s admin application). Now you
 can assign the portlet (via PortletAssignment) to any content object.</p>
-</div>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
@@ -138,7 +132,7 @@ can assign the portlet (via PortletAssignment) to any content object.</p>
 sophisticated implementation please refer to <a class="reference external" href="http://bitbucket.org/diefenbach/django-lfs">LFS</a></p>
 <p><strong>Installation</strong></p>
 <ol class="arabic">
-<li><p class="first">Install <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/">flatpages</a>: (flatpages serve as our example content)</p>
+<li><p class="first">Install <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/">flatpages</a> (flatpages serve as our example content)</p>
 </li>
 <li><p class="first">Add the portlets and portlets.example to INSTALLED_APPS</p>
 </li>
@@ -176,12 +170,7 @@ sophisticated implementation please refer to <a class="reference external" href=
 <li><a class="reference external" href="">Welcome to django-portlets&#8217;s documentation!</a><ul>
 <li><a class="reference external" href="#what-is-it">What is it?</a></li>
 <li><a class="reference external" href="#installation">Installation</a></li>
-<li><a class="reference external" href="#usage">Usage</a><ul>
-<li><a class="reference external" href="#create-a-portlet">Create a portlet</a></li>
-<li><a class="reference external" href="#register-the-portlet">Register the portlet</a></li>
-<li><a class="reference external" href="#assign-the-portlet-to-content">Assign the portlet to content</a></li>
-</ul>
-</li>
+<li><a class="reference external" href="#usage">Usage</a></li>
 <li><a class="reference external" href="#example">Example</a></li>
 <li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
 </ul>

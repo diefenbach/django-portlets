@@ -19,6 +19,8 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+* Changed documentation to one page (for now)
+
 0.3.1 (2009-10-14)
 ------------------
 
