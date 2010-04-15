@@ -23,11 +23,15 @@ def get_slots(obj):
         for pa in PortletAssignment.objects.filter(
             slot=slot, content_id=obj.id, content_type=ct.id):
             has_portlets = True
-            temp.append({
-                "pa_id" : pa.id,
-                "title" : pa.portlet.title,
-                "type" : portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
-            })
+
+            # Display only registered portlets
+            portlet_type = portlet_types.get(pa.portlet.__class__.__name__.lower())
+            if portlet_type:
+                temp.append({
+                    "pa_id" : pa.id,
+                    "title" : pa.portlet.title,
+                    "type" : portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
+                })
 
         items.append({
             "id"   : slot.id,
