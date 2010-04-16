@@ -24,6 +24,11 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+0.4.0 (2010-04-16)
+------------------
+
+* Display only registered portlets
+
 0.3.2 (2009-10-15)
 ------------------
 
