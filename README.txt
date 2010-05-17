@@ -24,6 +24,11 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.0 beta 1 (2010-05-17)
+-----------------------
+
+* First beta release.
+
 0.4.0 (2010-04-16)
 ------------------
 
