@@ -1,10 +1,9 @@
 # django imports
 from django import template
-from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache
 
 # portlets imports
 import portlets.utils
-from portlets.models import PortletBlocking
 from portlets.models import Slot
 
 register = template.Library()
@@ -15,6 +14,12 @@ def portlet_slot(context, slot_name, instance=None):
     implements the ``get_parent_for_portlets`` method the portlets of the
     parent of the instance are also added.
     """
+    cache_key = "portlets-%s-%s-%s" % (instance.content_type, instance.id, slot_name)
+    rendered_portlets = cache.get(cache_key)
+
+    if rendered_portlets:
+        return { "portlets" : rendered_portlets }
+
     if instance is None:
         return { "portlets" : [] }
 
@@ -56,5 +61,7 @@ def portlet_slot(context, slot_name, instance=None):
     rendered_portlets = []
     for portlet in temp:
         rendered_portlets.append(portlet.render(context))
+
+    cache.set(cache_key, rendered_portlets)
 
     return { "portlets" : rendered_portlets }
