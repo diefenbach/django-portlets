@@ -1,10 +1,10 @@
 What is it?
 ===========
 
-*Portlets* are content objects which are managed in *Slots*. *Slots* can be 
+*Portlets* are content objects which are managed in *Slots*. *Slots* can be
 freely defined and placed anywhere within a HTML page.
 
-Portlets are usual content objects, that means they can have arbitrary fields 
+Portlets are usual content objects, that means they can have arbitrary fields
 and functionalities.
 
 There are also some more advanced features like inheriting and blocking of
@@ -23,6 +23,12 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 
 Changes
 =======
+
+1.0 beta 2 (2010-05-21)
+------------------------
+
+* Improved caching
+* Added license
 
 1.0 beta 1 (2010-05-17)
 -----------------------
