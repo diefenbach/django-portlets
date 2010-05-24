@@ -17,7 +17,8 @@ def portlet_slot(context, slot_name, instance=None):
     request = context.get("request")
 
     # CACHE
-    cache_key = "portlets-%s-%s-%s-%s" % (instance.content_type, instance.id, slot_name, request.user.id)
+    content_type = instance.__class__.__name__.lower()
+    cache_key = "portlets-%s-%s-%s-%s" % (content_type, instance.id, slot_name, request.user.id)
     rendered_portlets = cache.get(cache_key)
 
     if rendered_portlets:
