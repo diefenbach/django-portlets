@@ -24,6 +24,12 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.0 beta 3 (2010-06-28)
+-----------------------
+
+* Bugfix: make registration working for postgres; issue #1
+* Bugfix caching: use class name instead of content type for cache key
+
 1.0 beta 2 (2010-05-21)
 ------------------------
 
