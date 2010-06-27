@@ -103,10 +103,7 @@ def register_portlet(obj, name):
     """Registers a portlet.
     """
     type = obj.__name__.lower()
-    try:
-        PortletRegistration.objects.create(type=type, name=name)
-    except:
-        pass
+    PortletRegistration.objects.get_or_create(type=type, name=name)
 
 def unregister_portlet(obj):
     """Unregisters portlet with given type
