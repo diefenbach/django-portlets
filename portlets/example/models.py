@@ -1,10 +1,14 @@
 # django imports
 from django import forms
 from django.db import models
+from django.db.models.signals import post_syncdb
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
+# portlets imports
+import portlets
 from portlets.models import Portlet
+from portlets.utils import register_portlet
 
 class TextPortlet(Portlet):
     """A simple portlet to display some text.
@@ -32,6 +36,3 @@ class TextPortletForm(forms.ModelForm):
     """
     class Meta:
         model = TextPortlet
-        
-from portlets.utils import register_portlet
-register_portlet(TextPortlet, "TextPortlet")

@@ -1,6 +1,7 @@
 # django imports
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 # portlets imports
 from portlets.models import PortletAssignment
@@ -100,13 +101,11 @@ def get_registered_portlets():
     return portlet_types
 
 def register_portlet(obj, name):
-    """Registers a portlet.
+    """Registers a portlet. Name and type must be unqiue
     """
     type = obj.__name__.lower()
-    try:
+    if not PortletRegistration.objects.filter(Q(type=type) | Q(name=name)):
         PortletRegistration.objects.create(type=type, name=name)
-    except:
-        pass
 
 def unregister_portlet(obj):
     """Unregisters portlet with given type

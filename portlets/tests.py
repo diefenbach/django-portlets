@@ -40,10 +40,6 @@ class PortletsModelsTestCase(TestCase):
         self.assertEqual(portlet_registration.name, "TextPortlet")
         self.assertEqual(portlet_registration.active, True)
 
-        # try to add another portlet with same type or name
-        self.assertRaises(IntegrityError, PortletRegistration.objects.create, type = "textportlet")
-        self.assertRaises(IntegrityError, PortletRegistration.objects.create, name = "TextPortlet")
-
         # add another portlet with other name
         portlet_registration_2 = PortletRegistration.objects.create(
             type = "textportlet_2",
@@ -100,6 +96,9 @@ class PortletsUtilsTestCase(TestCase):
     def test_get_slots(self):
         """
         """
+        # We need to register the portlet first
+        portlets.utils.register_portlet(TextPortlet, "TextPortlet")
+        
         # At the beginning no slot has portlets
         slots = portlets.utils.get_slots(self.page)
         self.assertEqual(slots["has_portlets"], False)
