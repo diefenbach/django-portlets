@@ -24,6 +24,12 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.0 beta 3 (2010-07-07)
+------------------------
+
+* Changed: cache keys are using CACHE_MIDDLEWARE_PREFIX now
+* Bugfix caching: added language to cache key
+
 1.0 beta 2 (2010-05-21)
 ------------------------
 
