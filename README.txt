@@ -24,9 +24,13 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.0 beta 4 (2010-07-07)
+-----------------------
+* Changed: cache keys are using CACHE_MIDDLEWARE_PREFIX now
+* Bugfix caching: added language to cache key
+
 1.0 beta 3 (2010-06-28)
 -----------------------
-
 * Bugfix: make registration working for postgres; issue #1
 * Bugfix caching: use class name instead of content type for cache key
 

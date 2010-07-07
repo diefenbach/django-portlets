@@ -1,5 +1,6 @@
 # django imports
 from django import template
+from django.conf import settings
 from django.core.cache import cache
 
 # portlets imports
@@ -18,7 +19,9 @@ def portlet_slot(context, slot_name, instance=None):
 
     # CACHE
     content_type = instance.__class__.__name__.lower()
-    cache_key = "portlets-%s-%s-%s-%s" % (content_type, instance.id, slot_name, request.user.id)
+    cache_key = "%s-portlets-%s-%s-%s-%s-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX,
+        content_type, instance.id, slot_name, request.user.id, context.get("CURRENT_LANGUAGE"))
+
     rendered_portlets = cache.get(cache_key)
 
     if rendered_portlets:
