@@ -75,6 +75,16 @@ def has_portlets(slot, obj):
 
 def get_portlets(slot, obj):
     """Returns portlet objs for a given slot and obj (content object).
+    
+    **Parameters**
+    
+    slot
+        The slot for which the portlets should be returned. Must be a Slot 
+        instance.
+        
+    obj
+        The object for the portlets should be returned. Must be a Django model.
+        
     """
     ctype = ContentType.objects.get_for_model(obj)
     try:
@@ -100,17 +110,30 @@ def get_registered_portlets():
 
     return portlet_types
 
-def register_portlet(obj, name):
-    """Registers a portlet. Name and type must be unqiue
+def register_portlet(klass, name):
+    """Registers a portlet. Name and klass must both be unique.
+    
+    **Parameters**
+    
+    klass
+        The portlet's python class
+        
+    name
+        Then unique name under which the portlet is registered
     """
-    type = obj.__name__.lower()
+    type = klass.__name__.lower()
     if not PortletRegistration.objects.filter(Q(type=type) | Q(name=name)):
         PortletRegistration.objects.create(type=type, name=name)
 
-def unregister_portlet(obj):
-    """Unregisters portlet with given type
+def unregister_portlet(klass):
+    """Unregisters portlet the passed portlet.
+
+    **Parameters**
+    
+    klass
+        The portlet's python class
     """
-    type = obj.__name__.lower()
+    type = klass.__name__.lower()
     try:
         pr = PortletRegistration.objects.get(type=type)
     except PortletRegistration.DoesNotExist:
