@@ -10,7 +10,12 @@ from portlets.models import PortletRegistration
 from portlets.models import Slot
 
 def get_slots(obj):
-    """Returns slot with all assigned portlets as dict.
+    """Returns all slots with all assigned portlets for the passed object.
+    
+    **Parameters:**
+        
+        obj
+            The obj for which the slots should be returned.
     """
     portlet_types = get_registered_portlets()
     ct = ContentType.objects.get_for_model(obj)
@@ -47,7 +52,18 @@ def get_slots(obj):
     }
 
 def is_blocked(obj, slot):
-    """Returns True if for the given object the given slot is blocked.
+    """Returns True if the passed slot is blocked for the passed object.
+    Otherwise False.
+    
+    **Parameters:**
+        
+        obj
+            The object for which the blocking is tested. Must be a Django 
+            model instance.
+            
+        slot
+            The slot for which the blocking is tested. Must be a Slot 
+            instance.
     """
     ct = ContentType.objects.get_for_model(obj)
     try:
@@ -58,11 +74,19 @@ def is_blocked(obj, slot):
 
     return True
 
-def has_portlets(slot, obj):
-    """Returns True if the given obj has portlets for given slot.
+def has_portlets(obj, slot):
+    """Returns True if the passed object has portlets for passed slot.
+
+    **Parameters:**
+        
+        obj
+            The object which is tested. Must be a Django model instance.
+            
+        slot
+            The slot which is tested. Must be a Slot instance.
     """
     while obj:
-        if len(get_portlets(slot, obj)) > 0:
+        if len(get_portlets(obj, slot)) > 0:
             return True
         if is_blocked(obj, slot):
             break
@@ -73,7 +97,7 @@ def has_portlets(slot, obj):
 
     return False
 
-def get_portlets(slot, obj):
+def get_portlets(obj, slot):
     """Returns portlet objs for a given slot and obj (content object).
     
     **Parameters**
@@ -83,7 +107,8 @@ def get_portlets(slot, obj):
         instance.
         
     obj
-        The object for the portlets should be returned. Must be a Django model.
+        The object for the portlets should be returned. Must be a Django model
+        instance.
         
     """
     ctype = ContentType.objects.get_for_model(obj)

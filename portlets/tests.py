@@ -152,30 +152,30 @@ class PortletsUtilsTestCase(TestCase):
         """
         """
         # At the beginning no slot has portlets
-        result = portlets.utils.has_portlets(self.left_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, False)
 
-        result = portlets.utils.has_portlets(self.right_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.right_slot)
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the left slot of the page
         PortletAssignment.objects.create(
             slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
-        result = portlets.utils.has_portlets(self.left_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, True)
 
-        result = portlets.utils.has_portlets(self.right_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.right_slot)
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the right slot of the page
         PortletAssignment.objects.create(
             slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
-        result = portlets.utils.has_portlets(self.left_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, True)
 
-        result = portlets.utils.has_portlets(self.right_slot, self.page)
+        result = portlets.utils.has_portlets(self.page, self.right_slot)
         self.assertEqual(result, True)
 
     def test_register_portlets(self):
