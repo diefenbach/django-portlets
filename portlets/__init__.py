@@ -1,0 +1,47 @@
+# portlets imports
+import portlets.utils
+
+class PortletsBase(object):
+    """Mixin class to make objects portlets aware.
+    """
+    def get_portlets(self, slot):
+        """Returns True if the passed slot is blocked. Otherwise False.
+    
+        **Parameters:**
+        
+            slot
+                The slot for which the blocking is tested. Must be a Slot 
+                instance.
+        """
+        return portlets.utils.get_portlets(self, slot)
+        
+    def get_slots(self):
+        """Returns all slots with all assigned portlets.
+        """
+        return portlets.utils.is_blocked(self)
+
+    def has_portlets(self, slot):
+        """Returns True if the ther are portlets for the passed slot.
+
+        **Parameters:**
+
+            slot
+                The slot which is tested. Must be a Slot instance.
+        """
+        return portlets.utils.has_portlets(self, slot)
+        
+    def is_blocked(self, slot):
+        """Returns True if the passed slot is blocked. Otherwise False.
+    
+        **Parameters:**
+            
+            slot
+                The slot for which the blocking is tested. Must be a Slot 
+                instance.
+        """
+        return portlets.utils.is_blocked(self, slot)
+
+    def get_parent_for_portlets(self):
+        """Returns the parent from which portlets are inherited.
+        """
+        return None
