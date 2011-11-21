@@ -24,6 +24,11 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.1 (2011-11-21)
+----------------
+* Added base class (from which can inherited)
+* API change: changed the order of parameters for get_portlets and has_portlets
+
 1.0 (2010-08-24)
 ----------------
 * First final release
