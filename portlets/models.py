@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class Portlet(models.Model):
     """Base portlet. All portlets should inherit from this class.
     """
-    title = models.CharField(blank=True, max_length=100)
+    title = models.CharField(_(u"Title"), blank=True, max_length=100)
 
     class Meta:
         abstract = True
@@ -28,7 +28,7 @@ class Portlet(models.Model):
 class PortletAssignment(models.Model):
     """Assigns portlets to slots and content.
     """
-    slot = models.ForeignKey("Slot")
+    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"))
 
     content_type = models.ForeignKey(ContentType, related_name="pa_content")
     content_id = models.PositiveIntegerField()
@@ -38,11 +38,11 @@ class PortletAssignment(models.Model):
     portlet_id = models.PositiveIntegerField()
     portlet = generic.GenericForeignKey('portlet_type', 'portlet_id')
 
-    position = models.PositiveSmallIntegerField(default=999)
+    position = models.PositiveSmallIntegerField(_("Position"), default=999)
 
     class Meta:
         ordering = ["position"]
-        verbose_name_plural = "Portlet assignments"
+        verbose_name_plural = _(u"Portlet assignments")
 
     def __unicode__(self):
         try:
@@ -53,7 +53,7 @@ class PortletAssignment(models.Model):
 class PortletBlocking(models.Model):
     """Blocks portlets for given slot and content object.
     """
-    slot = models.ForeignKey("Slot")
+    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"))
 
     content_type = models.ForeignKey(ContentType, related_name="pb_content")
     content_id = models.PositiveIntegerField()
@@ -83,9 +83,9 @@ class PortletRegistration(models.Model):
         * active
             If true the portlet will be provided to assign to content object
      """
-    type = models.CharField(max_length=30, unique=True)
-    name = models.CharField(max_length=50, unique=True)
-    active = models.BooleanField(default=True)
+    type = models.CharField(_(u"Type"), max_length=30, unique=True)
+    name = models.CharField(_(u"Name"), max_length=50, unique=True)
+    active = models.BooleanField(_(u"Active"), default=True)
 
     class Meta:
         ordering = ("name", )
@@ -97,7 +97,7 @@ class PortletRegistration(models.Model):
 class Slot(models.Model):
     """Slots are places to which portlets can be assigned.
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(_("Name"), max_length=50)
 
     def __unicode__(self):
         return self.name
