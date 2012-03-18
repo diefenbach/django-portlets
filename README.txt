@@ -24,6 +24,11 @@ For more documentation please visit: http://packages.python.org/django-portlets/
 Changes
 =======
 
+1.1.1 (2012-03-18)
+------------------
+* Added polish translations (Maciej Wiśniowski)
+* Added german translations
+
 1.1 (2011-11-21)
 ----------------
 * Added base class (from which can inherited)
