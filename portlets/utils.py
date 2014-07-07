@@ -108,7 +108,7 @@ def get_portlets(obj, slot):
         instance.
 
     """
-    logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
+    logger.info("Decprecated: portlets: the utility function 'get_portlets' is deprecated. Please use 'Slot.get_portlets'.")
     return slot.get_portlets(obj)
 
 

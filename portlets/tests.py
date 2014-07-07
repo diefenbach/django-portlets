@@ -303,6 +303,36 @@ class PortletsUtilsTestCase(TestCase):
         """Uses methods.
         """
         # At the beginning no slot has portlets
+        result = portlets.utils.get_portlets(self.page, self.left_slot)
+        self.assertEqual(result, [])
+
+        result = portlets.utils.get_portlets(self.page, self.right_slot)
+        self.assertEqual(result, [])
+
+        # Assigning the text portlet to the left slot of the page
+        PortletAssignment.objects.create(
+            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+
+        result = portlets.utils.get_portlets(self.page, self.left_slot)
+        self.assertEqual(result, [self.portlet])
+
+        result = portlets.utils.get_portlets(self.page, self.right_slot)
+        self.assertEqual(result, [])
+
+        # Assigning the text portlet to the right slot of the page
+        PortletAssignment.objects.create(
+            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+
+        result = portlets.utils.get_portlets(self.page, self.left_slot)
+        self.assertEqual(result, [self.portlet])
+
+        result = portlets.utils.get_portlets(self.page, self.right_slot)
+        self.assertEqual(result, [self.portlet])
+
+    def test_get_portlets_2(self):
+        """Uses methods.
+        """
+        # At the beginning no slot has portlets
         result = self.left_slot.get_portlets(self.page)
         self.assertEqual(result, [])
 
