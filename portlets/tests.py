@@ -36,8 +36,8 @@ class PortletsModelsTestCase(TestCase):
         """
         """
         portlet_registration = PortletRegistration.objects.create(
-            type = "textportlet",
-            name = "TextPortlet",
+            type="textportlet",
+            name="TextPortlet",
         )
 
         self.assertEqual(portlet_registration.type, "textportlet")
@@ -45,9 +45,9 @@ class PortletsModelsTestCase(TestCase):
         self.assertEqual(portlet_registration.active, True)
 
         # add another portlet with other name
-        portlet_registration_2 = PortletRegistration.objects.create(
-            type = "textportlet_2",
-            name = "TextPortlet_2",
+        PortletRegistration.objects.create(
+            type="textportlet_2",
+            name="TextPortlet_2",
         )
 
     def test_portlet_assignment(self):
@@ -58,9 +58,9 @@ class PortletsModelsTestCase(TestCase):
         portlet = TextPortlet.objects.create(title="Text")
 
         portlet_assignment = PortletAssignment.objects.create(
-            slot = slot,
-            content = page,
-            portlet = portlet,
+            slot=slot,
+            content=page,
+            portlet=portlet,
         )
 
         self.assertEqual(portlet_assignment.slot, slot)
@@ -74,12 +74,13 @@ class PortletsModelsTestCase(TestCase):
         page = FlatPage.objects.create(url="/test/", title="Test")
 
         portlet_blocking = PortletBlocking.objects.create(
-            slot = slot,
-            content = page,
+            slot=slot,
+            content=page,
         )
 
         self.assertEqual(portlet_blocking.slot, slot)
         self.assertEqual(portlet_blocking.content, page)
+
 
 class PortletsUtilsTestCase(TestCase):
     """Tests the methods of utils.py
@@ -192,7 +193,7 @@ class PortletsUtilsTestCase(TestCase):
         # Register the TextPortlet
         portlets.utils.register_portlet(TextPortlet, "TextPortlet")
         result = portlets.utils.get_registered_portlets()
-        self.assertEqual(result, {u"textportlet" : u"TextPortlet"})
+        self.assertEqual(result, {u"textportlet": u"TextPortlet"})
 
         # Unregister the TextPortlet
         portlets.utils.unregister_portlet(TextPortlet)
