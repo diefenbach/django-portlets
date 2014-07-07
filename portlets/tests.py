@@ -1,6 +1,6 @@
 # django imports
+from django.conf import settings
 from django.contrib.flatpages.models import FlatPage
-from django.db import IntegrityError
 from django.test import TestCase
 
 # reviews imports
@@ -10,6 +10,10 @@ from portlets.models import PortletBlocking
 from portlets.models import PortletRegistration
 from portlets.models import Slot
 import portlets.utils
+
+
+settings.INSTALLED_APPS += ("portlets.example", )
+
 
 class PortletsModelsTestCase(TestCase):
     """Tests the models
@@ -98,7 +102,7 @@ class PortletsUtilsTestCase(TestCase):
         """
         # We need to register the portlet first
         portlets.utils.register_portlet(TextPortlet, "TextPortlet")
-        
+
         # At the beginning no slot has portlets
         slots = portlets.utils.get_slots(self.page)
         self.assertEqual(slots["has_portlets"], False)
