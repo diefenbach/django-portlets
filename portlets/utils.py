@@ -47,7 +47,7 @@ def get_slots(obj):
         items.append({
             "id": slot.id,
             "name": slot.name,
-            "is_blocked": is_blocked(obj, slot),
+            "is_blocked": slot.is_blocked(obj),
             "portlets": temp,
         })
 
