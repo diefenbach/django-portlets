@@ -74,13 +74,7 @@ def is_blocked(obj, slot):
             instance.
     """
     logger.info("Decprecated: portlets: the utility function 'is_blocked' is deprecated. Please use 'Slot.is_blocked'.")
-    ct = ContentType.objects.get_for_model(obj)
-    try:
-        PortletBlocking.objects.get(slot=slot, content_type=ct.id, content_id=obj.id)
-    except PortletBlocking.DoesNotExist:
-        return False
-
-    return True
+    return slot.is_blocked(obj)
 
 
 # DEPRECATED 1.2
@@ -96,17 +90,7 @@ def has_portlets(obj, slot):
             The slot which is tested. Must be a Slot instance.
     """
     logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
-    while obj:
-        if len(get_portlets(obj, slot)) > 0:
-            return True
-        if is_blocked(obj, slot):
-            break
-        try:
-            obj = obj.get_parent_for_portlets()
-        except AttributeError:
-            break
-
-    return False
+    return slot.has_portlets(obj)
 
 
 # DEPRECATED 1.2
@@ -125,20 +109,7 @@ def get_portlets(obj, slot):
 
     """
     logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
-    ctype = ContentType.objects.get_for_model(obj)
-    try:
-        slot = Slot.objects.get(id=slot.id)
-    except ObjectDoesNotExist:
-        portlet_assignments = []
-    else:
-        portlet_assignments = PortletAssignment.objects.filter(
-            slot=slot, content_type=ctype.id, content_id=obj.id).order_by("position")
-
-    portlets = []
-    for portlet_assignment in portlet_assignments:
-        portlets.append(portlet_assignment.portlet)
-
-    return portlets
+    return slot.get_portlets(obj)
 
 
 def get_registered_portlets():
