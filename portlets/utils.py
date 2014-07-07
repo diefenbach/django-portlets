@@ -9,11 +9,16 @@ from portlets.models import PortletBlocking
 from portlets.models import PortletRegistration
 from portlets.models import Slot
 
+# Load logger
+import logging
+logger = logging.getLogger("lfc")
+
+
 def get_slots(obj):
     """Returns all slots with all assigned portlets for the passed object.
-    
+
     **Parameters:**
-        
+
         obj
             The obj for which the slots should be returned.
     """
@@ -34,57 +39,63 @@ def get_slots(obj):
             portlet_type = portlet_types.get(pa.portlet.__class__.__name__.lower())
             if portlet_type:
                 temp.append({
-                    "pa_id" : pa.id,
-                    "title" : pa.portlet.title,
-                    "type" : portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
+                    "pa_id": pa.id,
+                    "title": pa.portlet.title,
+                    "type": portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
                 })
 
         items.append({
-            "id"   : slot.id,
-            "name" : slot.name,
-            "is_blocked" : is_blocked(obj, slot),
-            "portlets" : temp,
+            "id": slot.id,
+            "name": slot.name,
+            "is_blocked": is_blocked(obj, slot),
+            "portlets": temp,
         })
 
     return {
-        "has_portlets" : has_portlets,
-        "items" : items
+        "has_portlets": has_portlets,
+        "items": items
     }
 
+
+# DEPRECATED 1.2
 def is_blocked(obj, slot):
-    """Returns True if the passed slot is blocked for the passed object.
+    """
+    Returns True if the passed slot is blocked for the passed object.
     Otherwise False.
-    
+
     **Parameters:**
-        
+
         obj
-            The object for which the blocking is tested. Must be a Django 
+            The object for which the blocking is tested. Must be a Django
             model instance.
-            
+
         slot
-            The slot for which the blocking is tested. Must be a Slot 
+            The slot for which the blocking is tested. Must be a Slot
             instance.
     """
+    logger.info("Decprecated: portlets: the utility function 'is_blocked' is deprecated. Please use 'Slot.is_blocked'.")
     ct = ContentType.objects.get_for_model(obj)
     try:
-        pb = PortletBlocking.objects.get(
-            slot=slot, content_type=ct.id, content_id=obj.id)
+        PortletBlocking.objects.get(slot=slot, content_type=ct.id, content_id=obj.id)
     except PortletBlocking.DoesNotExist:
         return False
 
     return True
 
+
+# DEPRECATED 1.2
 def has_portlets(obj, slot):
     """Returns True if the passed object has portlets for passed slot.
 
     **Parameters:**
-        
+
         obj
             The object which is tested. Must be a Django model instance.
-            
+
         slot
             The slot which is tested. Must be a Slot instance.
     """
+    logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
     while obj:
         if len(get_portlets(obj, slot)) > 0:
             return True
@@ -97,20 +108,23 @@ def has_portlets(obj, slot):
 
     return False
 
+
+# DEPRECATED 1.2
 def get_portlets(obj, slot):
     """Returns portlet objs for a given slot and obj (content object).
-    
+
     **Parameters**
-    
+
     slot
-        The slot for which the portlets should be returned. Must be a Slot 
+        The slot for which the portlets should be returned. Must be a Slot
         instance.
-        
+
     obj
         The object for the portlets should be returned. Must be a Django model
         instance.
-        
+
     """
+    logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
     ctype = ContentType.objects.get_for_model(obj)
     try:
         slot = Slot.objects.get(id=slot.id)
@@ -126,6 +140,7 @@ def get_portlets(obj, slot):
 
     return portlets
 
+
 def get_registered_portlets():
     """Returns registered portlet types as dict.
     """
@@ -135,14 +150,15 @@ def get_registered_portlets():
 
     return portlet_types
 
+
 def register_portlet(klass, name):
     """Registers a portlet. Name and klass must both be unique.
-    
+
     **Parameters**
-    
+
     klass
         The portlet's python class
-        
+
     name
         Then unique name under which the portlet is registered
     """
@@ -150,11 +166,12 @@ def register_portlet(klass, name):
     if not PortletRegistration.objects.filter(Q(type=type) | Q(name=name)):
         PortletRegistration.objects.create(type=type, name=name)
 
+
 def unregister_portlet(klass):
     """Unregisters portlet the passed portlet.
 
     **Parameters**
-    
+
     klass
         The portlet's python class
     """

@@ -1,10 +1,9 @@
 # django imports
-from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+
 
 class Portlet(models.Model):
     """Base portlet. All portlets should inherit from this class.
@@ -24,6 +23,7 @@ class Portlet(models.Model):
         classes.
         """
         raise NotImplemented
+
 
 class PortletAssignment(models.Model):
     """Assigns portlets to slots and content.
@@ -50,6 +50,7 @@ class PortletAssignment(models.Model):
         except AttributeError:
             return ""
 
+
 class PortletBlocking(models.Model):
     """Blocks portlets for given slot and content object.
     """
@@ -68,8 +69,10 @@ class PortletBlocking(models.Model):
         except AttributeError:
             return ""
 
+
 class PortletRegistration(models.Model):
-    """Registered portlets. These are provided to be added to customer.
+    """
+    Registered portlets. These are provided to be added to customer.
 
     Parameters:
 
@@ -79,7 +82,7 @@ class PortletRegistration(models.Model):
 
         * name
             The name of the portlet. This is displayed to the user.
-            
+
         * active
             If true the portlet will be provided to assign to content object
      """
@@ -95,9 +98,70 @@ class PortletRegistration(models.Model):
 
 
 class Slot(models.Model):
-    """Slots are places to which portlets can be assigned.
+    """
+    Slots are places to which portlets can be assigned.
     """
     name = models.CharField(_("Name"), max_length=50)
 
     def __unicode__(self):
         return self.name
+
+    def get_portlets(self, obj):
+        """
+        Returns portlet objs for a given slot and obj (content object).
+
+        **Parameters**
+
+        obj
+            The object for the portlets should be returned. Must be a Django model
+            instance.
+        """
+        ctype = ContentType.objects.get_for_model(obj)
+        portlet_assignments = PortletAssignment.objects.filter(
+            slot=self, content_type=ctype.id, content_id=obj.id).order_by("position")
+
+        portlets = []
+        for portlet_assignment in portlet_assignments:
+            portlets.append(portlet_assignment.portlet)
+
+        return portlets
+
+    def has_portlets(self, obj):
+        """
+        Returns True if the passed object has portlets for passed slot.
+
+        **Parameters:**
+
+            obj
+                The object which is tested. Must be a Django model instance.
+        """
+        while obj:
+            if len(self.get_portlets(obj)) > 0:
+                return True
+            if self.is_blocked(obj):
+                break
+            try:
+                obj = obj.get_parent_for_portlets()
+            except AttributeError:
+                break
+
+        return False
+
+    def is_blocked(self, obj):
+        """
+        Returns True if the passed slot is blocked for the passed object.
+        Otherwise False.
+
+        **Parameters:**
+
+            slot
+                The slot for which the blocking is tested. Must be a Slot
+                instance.
+        """
+        ct = ContentType.objects.get_for_model(obj)
+        try:
+            PortletBlocking.objects.get(slot=self, content_type=ct.id, content_id=obj.id)
+        except PortletBlocking.DoesNotExist:
+            return False
+        else:
+            return True
