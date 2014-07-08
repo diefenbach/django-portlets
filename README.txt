@@ -19,7 +19,7 @@ django-portlets comes with a simple example application which shows how to use i
 
 Documentation
 =============
-For more documentation please visit: http://packages.python.org/django-portlets/
+For more documentation please visit: http://django-portlets.rtfd.org
 
 Changes
 =======
