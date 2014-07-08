@@ -11,7 +11,7 @@ from portlets.models import Slot
 
 # Load logger
 import logging
-logger = logging.getLogger("lfc")
+logger = logging.getLogger(__name__)
 
 
 def get_slots(obj):
