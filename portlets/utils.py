@@ -1,11 +1,9 @@
 # django imports
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 
 # portlets imports
 from portlets.models import PortletAssignment
-from portlets.models import PortletBlocking
 from portlets.models import PortletRegistration
 from portlets.models import Slot
 
