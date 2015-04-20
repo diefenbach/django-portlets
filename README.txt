@@ -24,10 +24,15 @@ For more documentation please visit: http://django-portlets.rtfd.org
 Changes
 =======
 
+1.3 (2015-04-20)
+----------------
+
+* Adds Django 1.8 support
+
 1.2 (2014-07-08)
 ----------------
 
-* Adds logging to __name__
+* Sets logging to __name__
 * Moves utilities functions for Slots to the Slot model
 
 1.1.1 (2012-03-18)
