@@ -1,6 +1,6 @@
 # django imports
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -32,15 +32,16 @@ class PortletAssignment(models.Model):
 
     content_type = models.ForeignKey(ContentType, related_name="pa_content")
     content_id = models.PositiveIntegerField()
-    content = generic.GenericForeignKey('content_type', 'content_id')
+    content = GenericForeignKey('content_type', 'content_id')
 
     portlet_type = models.ForeignKey(ContentType, related_name="pa_portlets")
     portlet_id = models.PositiveIntegerField()
-    portlet = generic.GenericForeignKey('portlet_type', 'portlet_id')
+    portlet = GenericForeignKey('portlet_type', 'portlet_id')
 
     position = models.PositiveSmallIntegerField(_("Position"), default=999)
 
     class Meta:
+        app_label = "portlets"
         ordering = ["position"]
         verbose_name_plural = _(u"Portlet assignments")
 
@@ -58,9 +59,10 @@ class PortletBlocking(models.Model):
 
     content_type = models.ForeignKey(ContentType, related_name="pb_content")
     content_id = models.PositiveIntegerField()
-    content = generic.GenericForeignKey('content_type', 'content_id')
+    content = GenericForeignKey('content_type', 'content_id')
 
     class Meta:
+        app_label = "portlets"
         unique_together = ["slot", "content_id", "content_type"]
 
     def __unicode__(self):
@@ -91,6 +93,7 @@ class PortletRegistration(models.Model):
     active = models.BooleanField(_(u"Active"), default=True)
 
     class Meta:
+        app_label = "portlets"
         ordering = ("name", )
 
     def __unicode__(self):
@@ -102,6 +105,9 @@ class Slot(models.Model):
     Slots are places to which portlets can be assigned.
     """
     name = models.CharField(_("Name"), max_length=50)
+
+    class Meta:
+        app_label = "portlets"
 
     def __unicode__(self):
         return self.name
