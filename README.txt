@@ -24,6 +24,12 @@ For more documentation please visit: http://django-portlets.rtfd.org
 Changes
 =======
 
+1.4 (2015-05-05)
+----------------
+
+* Resolves RemovedInDjango19Warnings.
+* Removes deprecated functions.
+
 1.3 (2015-04-20)
 ----------------
 
