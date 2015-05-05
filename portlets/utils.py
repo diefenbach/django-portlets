@@ -55,61 +55,6 @@ def get_slots(obj):
     }
 
 
-# DEPRECATED 1.2
-def is_blocked(obj, slot):
-    """
-    Returns True if the passed slot is blocked for the passed object.
-    Otherwise False.
-
-    **Parameters:**
-
-        obj
-            The object for which the blocking is tested. Must be a Django
-            model instance.
-
-        slot
-            The slot for which the blocking is tested. Must be a Slot
-            instance.
-    """
-    logger.info("Decprecated: portlets: the utility function 'is_blocked' is deprecated. Please use 'Slot.is_blocked'.")
-    return slot.is_blocked(obj)
-
-
-# DEPRECATED 1.2
-def has_portlets(obj, slot):
-    """Returns True if the passed object has portlets for passed slot.
-
-    **Parameters:**
-
-        obj
-            The object which is tested. Must be a Django model instance.
-
-        slot
-            The slot which is tested. Must be a Slot instance.
-    """
-    logger.info("Decprecated: portlets: the utility function 'has_portlets' is deprecated. Please use 'Slot.has_portlets'.")
-    return slot.has_portlets(obj)
-
-
-# DEPRECATED 1.2
-def get_portlets(obj, slot):
-    """Returns portlet objs for a given slot and obj (content object).
-
-    **Parameters**
-
-    slot
-        The slot for which the portlets should be returned. Must be a Slot
-        instance.
-
-    obj
-        The object for the portlets should be returned. Must be a Django model
-        instance.
-
-    """
-    logger.info("Decprecated: portlets: the utility function 'get_portlets' is deprecated. Please use 'Slot.get_portlets'.")
-    return slot.get_portlets(obj)
-
-
 def get_registered_portlets():
     """Returns registered portlet types as dict.
     """
