@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Gonzalo Bustos, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-13 21:00-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Gonzalo Bustos\n"
+"Language-Team: Spanish (Argentina) <LL@li.org>\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: portlets/example/models.py:15
+msgid "Text"
+msgstr "Texto"
+
+#: portlets/models.py:11
+msgid "Title"
+msgstr "Título"
+
+#: portlets/models.py:31 portlets/models.py:58
+msgid "Slot"
+msgstr "Espacio"
+
+#: portlets/models.py:41
+msgid "Position"
+msgstr "Posición"
+
+#: portlets/models.py:46
+msgid "Portlet assignments"
+msgstr "Asignaciones de portlet"
+
+#: portlets/models.py:91
+msgid "Type"
+msgstr "Tipo"
+
+#: portlets/models.py:92 portlets/models.py:107
+msgid "Name"
+msgstr "Nombre"
+
+#: portlets/models.py:93
+msgid "Active"
+msgstr "Activo"
