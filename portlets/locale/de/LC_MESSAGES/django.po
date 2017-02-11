@@ -35,7 +35,7 @@ msgstr "Portletzuweisungen"
 
 #: models.py:86
 msgid "Type"
-msgstr "Tpy"
+msgstr "Typ"
 
 #: models.py:87 models.py:100
 msgid "Name"
