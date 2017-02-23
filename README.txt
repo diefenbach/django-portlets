@@ -24,6 +24,11 @@ For more documentation please visit: http://django-portlets.rtfd.org
 Changes
 =======
 
+1.5 (2017-02-23)
+----------------
+* Add Django 1.10 support
+
+
 1.4 (2015-05-05)
 ----------------
 
