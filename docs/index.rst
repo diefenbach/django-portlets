@@ -5,24 +5,25 @@ Welcome to django-portlets's documentation!
 What is it?
 ===========
 
-Portlets are pieces of content which are managed in Slots. Slots can be freely 
+Portlets are pieces of content which are managed in Slots. Slots can be freely
 defined and placed anywhere within a HTML page.
 
-django-portlets provides just a generic engine to manage portlets. You can find  a comprehensive implementation within `LFS`_.
+django-portlets provides just a generic engine to manage portlets. You can find
+a comprehensive implementation within `LFS`_.
 
 Installation
 ============
 
 To install just do:
 
-1. ``python setup.py install`` or ``easy_install django-portlets``
+1. ``python setup.py install`` or ``pip install django-portlets``
 
-2. Add portlets to *INSTALLED_APPS*.
+2. Add portlets to ``INSTALLED_APPS``.
 
 Usage
 =====
 
-In order to use django-portlets you first have to implement a portlet. This is 
+In order to use django-portlets you first have to implement a portlet. This is
 done by inheriting from the provided base class, for instance:
 
 **Create a portlet**
@@ -79,17 +80,17 @@ To display the content of the portlet we will have to create a simple template i
 
 **Register the portlet**
 
-In order to make it available for selection, the portlet has to be registered 
+In order to make it available for selection, the portlet has to be registered
 (make sure that this is called, when django starts up)::
 
     from portlets.utils import register_portlet
     register_portlet(TextPortlet, "TextPortlet")
 
-To display portlets within your templates, just use the provided portlet_slot 
+To display portlets within your templates, just use the provided portlet_slot
 tag, e.g.::
 
    {% load portlets_tags %}
-   
+
    <table>
         <tr>
             <td>
@@ -115,8 +116,8 @@ django-portlets provides a simple example with a complete implementation of a po
 
 2. Add the portlets and portlets.example to INSTALLED_APPS
 
-3. Sync the database 
-    
+3. Sync the database
+
     $ bin/django syncdb
 
 4. Go to django admin and:
@@ -136,4 +137,4 @@ Indices and tables
 
 .. _LFS: http://bitbucket.org/diefenbach/django-lfs
 .. _LFC: http://bitbucket.org/diefenbach/django-lfc
-.. _`flatpages`: http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/ 
+.. _`flatpages`: http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/
