@@ -28,13 +28,13 @@ class Portlet(models.Model):
 class PortletAssignment(models.Model):
     """Assigns portlets to slots and content.
     """
-    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"))
+    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"), on_delete=models.CASCADE)
 
-    content_type = models.ForeignKey(ContentType, related_name="pa_content")
+    content_type = models.ForeignKey(ContentType, related_name="pa_content", on_delete=models.CASCADE)
     content_id = models.PositiveIntegerField()
     content = GenericForeignKey('content_type', 'content_id')
 
-    portlet_type = models.ForeignKey(ContentType, related_name="pa_portlets")
+    portlet_type = models.ForeignKey(ContentType, related_name="pa_portlets", on_delete=models.CASCADE)
     portlet_id = models.PositiveIntegerField()
     portlet = GenericForeignKey('portlet_type', 'portlet_id')
 
@@ -55,9 +55,9 @@ class PortletAssignment(models.Model):
 class PortletBlocking(models.Model):
     """Blocks portlets for given slot and content object.
     """
-    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"))
+    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"), on_delete=models.CASCADE)
 
-    content_type = models.ForeignKey(ContentType, related_name="pb_content")
+    content_type = models.ForeignKey(ContentType, related_name="pb_content", on_delete=models.CASCADE)
     content_id = models.PositiveIntegerField()
     content = GenericForeignKey('content_type', 'content_id')
 
