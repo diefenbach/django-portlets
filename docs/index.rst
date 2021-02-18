@@ -8,16 +8,17 @@ What is it?
 Portlets are pieces of content which are managed in Slots. Slots can be freely
 defined and placed anywhere within a HTML page.
 
-django-portlets provides just a generic engine to manage portlets. You can find  a comprehensive implementation within `LFS`_.
+django-portlets provides just a generic engine to manage portlets. You can find
+a comprehensive implementation within `LFS`_.
 
 Installation
 ============
 
 To install just do:
 
-1. ``python setup.py install`` or ``easy_install django-portlets``
+1. ``python setup.py install`` or ``pip install django-portlets``
 
-2. Add portlets to *INSTALLED_APPS*.
+2. Add portlets to ``INSTALLED_APPS``.
 
 Usage
 =====
