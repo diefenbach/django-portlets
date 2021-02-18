@@ -45,7 +45,7 @@ class PortletAssignment(models.Model):
         ordering = ["position"]
         verbose_name_plural = _(u"Portlet assignments")
 
-    def __unicode__(self):
+    def __str__(self):
         try:
             return "%s (%s)" % (self.portlet.title, self.slot.name)
         except AttributeError:
@@ -65,7 +65,7 @@ class PortletBlocking(models.Model):
         app_label = "portlets"
         unique_together = ["slot", "content_id", "content_type"]
 
-    def __unicode__(self):
+    def __str__(self):
         try:
             return "%s (%s)" % (self.content.title, self.slot.name)
         except AttributeError:
@@ -96,7 +96,7 @@ class PortletRegistration(models.Model):
         app_label = "portlets"
         ordering = ("name", )
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s %s" % (self.type, self.name)
 
 
@@ -109,7 +109,7 @@ class Slot(models.Model):
     class Meta:
         app_label = "portlets"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_portlets(self, obj):

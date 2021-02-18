@@ -14,7 +14,7 @@ class TextPortlet(Portlet):
     """
     text = models.TextField(_(u"Text"), blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % self.id
 
     def render(self, context=None):

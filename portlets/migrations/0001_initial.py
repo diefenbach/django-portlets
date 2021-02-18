@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
                 ('content_id', models.PositiveIntegerField()),
                 ('portlet_id', models.PositiveIntegerField()),
                 ('position', models.PositiveSmallIntegerField(default=999, verbose_name='Position')),
-                ('content_type', models.ForeignKey(related_name='pa_content', to='contenttypes.ContentType')),
-                ('portlet_type', models.ForeignKey(related_name='pa_portlets', to='contenttypes.ContentType')),
+                ('content_type', models.ForeignKey(related_name='pa_content', to='contenttypes.ContentType', on_delete=models.CASCADE)),
+                ('portlet_type', models.ForeignKey(related_name='pa_portlets', to='contenttypes.ContentType', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['position'],
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('content_id', models.PositiveIntegerField()),
-                ('content_type', models.ForeignKey(related_name='pb_content', to='contenttypes.ContentType')),
+                ('content_type', models.ForeignKey(related_name='pb_content', to='contenttypes.ContentType', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -56,12 +56,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='portletblocking',
             name='slot',
-            field=models.ForeignKey(verbose_name='Slot', to='portlets.Slot'),
+            field=models.ForeignKey(verbose_name='Slot', to='portlets.Slot', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='portletassignment',
             name='slot',
-            field=models.ForeignKey(verbose_name='Slot', to='portlets.Slot'),
+            field=models.ForeignKey(verbose_name='Slot', to='portlets.Slot', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='portletblocking',
