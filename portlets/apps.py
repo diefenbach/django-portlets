@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class PortletAppConfig(AppConfig):
-    name = 'portlets'
+    name = "portlets"

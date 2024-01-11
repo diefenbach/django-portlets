@@ -12,29 +12,26 @@ from portlets.models import Slot
 import portlets.utils
 
 
-settings.INSTALLED_APPS += ("portlets.example", )
+settings.INSTALLED_APPS += ("portlets.example",)
 
 
 class PortletsModelsTestCase(TestCase):
-    """Tests the models
-    """
+    """Tests the models"""
+
     def test_portlet(self):
-        """
-        """
+        """ """
         text_portlet = TextPortlet.objects.create(title="Text")
         self.assertEqual(text_portlet.title, "Text")
         self.failIf(text_portlet.render().find("portlet-header") == -1)
         self.failIf(text_portlet.form().as_p().find('id="id_title"') == -1)
 
     def test_slot(self):
-        """
-        """
+        """ """
         slot = Slot.objects.create(name="Left")
         self.assertEqual(slot.name, "Left")
 
     def test_portlet_registration(self):
-        """
-        """
+        """ """
         portlet_registration = PortletRegistration.objects.create(
             type="textportlet",
             name="TextPortlet",
@@ -51,8 +48,7 @@ class PortletsModelsTestCase(TestCase):
         )
 
     def test_portlet_assignment(self):
-        """
-        """
+        """ """
         slot = Slot.objects.create(name="Left")
         page = FlatPage.objects.create(url="/test/", title="Test")
         portlet = TextPortlet.objects.create(title="Text")
@@ -68,8 +64,7 @@ class PortletsModelsTestCase(TestCase):
         self.assertEqual(portlet_assignment.portlet, portlet)
 
     def test_portlet_blocking(self):
-        """
-        """
+        """ """
         slot = Slot.objects.create(name="Left")
         page = FlatPage.objects.create(url="/test/", title="Test")
 
@@ -83,11 +78,10 @@ class PortletsModelsTestCase(TestCase):
 
 
 class PortletsUtilsTestCase(TestCase):
-    """Tests the methods of utils.py
-    """
+    """Tests the methods of utils.py"""
+
     def setUp(self):
-        """
-        """
+        """ """
         # Create a page which server as content
         self.page = FlatPage.objects.create(url="/test/", title="Test")
 
@@ -99,8 +93,7 @@ class PortletsUtilsTestCase(TestCase):
         self.right_slot = Slot.objects.create(name="Right")
 
     def test_get_slots(self):
-        """
-        """
+        """ """
         # We need to register the portlet first
         portlets.utils.register_portlet(TextPortlet, "TextPortlet")
 
@@ -113,8 +106,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(slots["items"][1]["portlets"], [])
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         slots = portlets.utils.get_slots(self.page)
         self.assertEqual(slots["has_portlets"], True)
@@ -127,8 +119,7 @@ class PortletsUtilsTestCase(TestCase):
         portlet_2 = TextPortlet.objects.create(title="Text 2")
 
         # ... and assign it also to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=portlet_2, position=2)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=portlet_2, position=2)
 
         slots = portlets.utils.get_slots(self.page)
         self.assertEqual(slots["has_portlets"], True)
@@ -142,8 +133,7 @@ class PortletsUtilsTestCase(TestCase):
         portlet_3 = TextPortlet.objects.create(title="Text 3")
 
         # ... and assign it the right slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=portlet_3, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=portlet_3, position=1)
 
         slots = portlets.utils.get_slots(self.page)
         self.assertEqual(slots["has_portlets"], True)
@@ -154,8 +144,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(slots["items"][1]["portlets"][0]["title"], "Text 3")
 
     def test_has_portlets(self):
-        """
-        """
+        """ """
         # At the beginning no slot has portlets
         result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, False)
@@ -164,8 +153,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, True)
@@ -174,8 +162,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the right slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = portlets.utils.has_portlets(self.page, self.left_slot)
         self.assertEqual(result, True)
@@ -184,8 +171,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, True)
 
     def test_has_portlets_2(self):
-        """Uses methods.
-        """
+        """Uses methods."""
         # At the beginning no slot has portlets
         result = self.left_slot.has_portlets(self.page)
         self.assertEqual(result, False)
@@ -194,8 +180,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = self.left_slot.has_portlets(self.page)
         self.assertEqual(result, True)
@@ -204,8 +189,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, False)
 
         # Assigning the text portlet to the right slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = self.left_slot.has_portlets(self.page)
         self.assertEqual(result, True)
@@ -214,8 +198,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, True)
 
     def test_register_portlets(self):
-        """
-        """
+        """ """
         # At the beginning no portlets are registered
         result = portlets.utils.get_registered_portlets()
         self.assertEqual(result, {})
@@ -223,7 +206,7 @@ class PortletsUtilsTestCase(TestCase):
         # Register the TextPortlet
         portlets.utils.register_portlet(TextPortlet, "TextPortlet")
         result = portlets.utils.get_registered_portlets()
-        self.assertEqual(result, {u"textportlet": u"TextPortlet"})
+        self.assertEqual(result, {"textportlet": "TextPortlet"})
 
         # Unregister the TextPortlet
         portlets.utils.unregister_portlet(TextPortlet)
@@ -231,15 +214,12 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, {})
 
     def test_is_blocked(self):
-        """
-        """
+        """ """
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = portlets.utils.is_blocked(self.page, self.left_slot)
         self.assertEqual(result, False)
@@ -268,12 +248,10 @@ class PortletsUtilsTestCase(TestCase):
     def test_is_blocked_2(self):
         """Uses methods."""
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = self.left_slot.is_blocked(self.page)
         self.assertEqual(result, False)
@@ -300,8 +278,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, True)
 
     def test_get_portlets(self):
-        """Uses methods.
-        """
+        """Uses methods."""
         # At the beginning no slot has portlets
         result = portlets.utils.get_portlets(self.page, self.left_slot)
         self.assertEqual(result, [])
@@ -310,8 +287,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, [])
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = portlets.utils.get_portlets(self.page, self.left_slot)
         self.assertEqual(result, [self.portlet])
@@ -320,8 +296,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, [])
 
         # Assigning the text portlet to the right slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = portlets.utils.get_portlets(self.page, self.left_slot)
         self.assertEqual(result, [self.portlet])
@@ -330,8 +305,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, [self.portlet])
 
     def test_get_portlets_2(self):
-        """Uses methods.
-        """
+        """Uses methods."""
         # At the beginning no slot has portlets
         result = self.left_slot.get_portlets(self.page)
         self.assertEqual(result, [])
@@ -340,8 +314,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, [])
 
         # Assigning the text portlet to the left slot of the page
-        PortletAssignment.objects.create(
-            slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.left_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = self.left_slot.get_portlets(self.page)
         self.assertEqual(result, [self.portlet])
@@ -350,8 +323,7 @@ class PortletsUtilsTestCase(TestCase):
         self.assertEqual(result, [])
 
         # Assigning the text portlet to the right slot of the page
-        PortletAssignment.objects.create(
-            slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
+        PortletAssignment.objects.create(slot=self.right_slot, content=self.page, portlet=self.portlet, position=1)
 
         result = self.left_slot.get_portlets(self.page)
         self.assertEqual(result, [self.portlet])

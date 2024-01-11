@@ -9,6 +9,7 @@ from portlets.models import Slot
 
 # Load logger
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -29,35 +30,34 @@ def get_slots(obj):
     items = []
     for slot in Slot.objects.all():
         temp = []
-        for pa in PortletAssignment.objects.filter(
-            slot=slot, content_id=obj.id, content_type=ct.id):
+        for pa in PortletAssignment.objects.filter(slot=slot, content_id=obj.id, content_type=ct.id):
             has_portlets = True
 
             # Display only registered portlets
             portlet_type = portlet_types.get(pa.portlet.__class__.__name__.lower())
             if portlet_type:
-                temp.append({
-                    "pa_id": pa.id,
-                    "title": pa.portlet.title,
-                    "type": portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
-                })
+                temp.append(
+                    {
+                        "pa_id": pa.id,
+                        "title": pa.portlet.title,
+                        "type": portlet_types.get(pa.portlet.__class__.__name__.lower(), ""),
+                    }
+                )
 
-        items.append({
-            "id": slot.id,
-            "name": slot.name,
-            "is_blocked": slot.is_blocked(obj),
-            "portlets": temp,
-        })
+        items.append(
+            {
+                "id": slot.id,
+                "name": slot.name,
+                "is_blocked": slot.is_blocked(obj),
+                "portlets": temp,
+            }
+        )
 
-    return {
-        "has_portlets": has_portlets,
-        "items": items
-    }
+    return {"has_portlets": has_portlets, "items": items}
 
 
 def get_registered_portlets():
-    """Returns registered portlet types as dict.
-    """
+    """Returns registered portlet types as dict."""
     portlet_types = {}
     for pr in PortletRegistration.objects.all():
         portlet_types[pr.type] = pr.name

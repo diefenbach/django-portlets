@@ -9,7 +9,7 @@ from portlets.models import Slot
 register = template.Library()
 
 
-@register.inclusion_tag('portlets/portlet_slot.html', takes_context=True)
+@register.inclusion_tag("portlets/portlet_slot.html", takes_context=True)
 def portlet_slot(context, slot_name, instance=None):
     """
     Returns the portlets for given slot and instance. If the instance implements
@@ -20,8 +20,14 @@ def portlet_slot(context, slot_name, instance=None):
 
     # CACHE
     content_type = instance.__class__.__name__.lower()
-    cache_key = "%s-portlets-%s-%s-%s-%s-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX,
-        content_type, instance.id, slot_name, request.user.id, context.get("CURRENT_LANGUAGE"))
+    cache_key = "%s-portlets-%s-%s-%s-%s-%s" % (
+        settings.CACHE_MIDDLEWARE_KEY_PREFIX,
+        content_type,
+        instance.id,
+        slot_name,
+        request.user.id,
+        context.get("CURRENT_LANGUAGE"),
+    )
 
     rendered_portlets = cache.get(cache_key)
 

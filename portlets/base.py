@@ -1,6 +1,6 @@
 class PortletsBase(object):
-    """Mixin class to make objects portlets aware.
-    """
+    """Mixin class to make objects portlets aware."""
+
     def get_portlets(self, slot):
         """Returns True if the passed slot is blocked. Otherwise False.
 
@@ -13,9 +13,9 @@ class PortletsBase(object):
         return slot.get_portlets(self)
 
     def get_slots(self):
-        """Returns all slots with all assigned portlets.
-        """
+        """Returns all slots with all assigned portlets."""
         import portlets.utils
+
         return portlets.utils.get_slots(self)
 
     def has_portlets(self, slot):
@@ -40,6 +40,5 @@ class PortletsBase(object):
         return slot.is_blocked(self)
 
     def get_parent_for_portlets(self):
-        """Returns the parent from which portlets are inherited.
-        """
+        """Returns the parent from which portlets are inherited."""
         return None

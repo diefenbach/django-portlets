@@ -2,20 +2,19 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Portlet(models.Model):
-    """Base portlet. All portlets should inherit from this class.
-    """
-    title = models.CharField(_(u"Title"), blank=True, max_length=100)
+    """Base portlet. All portlets should inherit from this class."""
+
+    title = models.CharField(_("Title"), blank=True, max_length=100)
 
     class Meta:
         abstract = True
 
     def render(self):
-        """Renders the portlet as html. Have to be implemented by sub classes.
-        """
+        """Renders the portlet as html. Have to be implemented by sub classes."""
         raise NotImplemented
 
     def form(self, **kwargs):
@@ -26,24 +25,24 @@ class Portlet(models.Model):
 
 
 class PortletAssignment(models.Model):
-    """Assigns portlets to slots and content.
-    """
-    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"), on_delete=models.CASCADE)
+    """Assigns portlets to slots and content."""
+
+    slot = models.ForeignKey("Slot", verbose_name=_("Slot"), on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, related_name="pa_content", on_delete=models.CASCADE)
     content_id = models.PositiveIntegerField()
-    content = GenericForeignKey('content_type', 'content_id')
+    content = GenericForeignKey("content_type", "content_id")
 
     portlet_type = models.ForeignKey(ContentType, related_name="pa_portlets", on_delete=models.CASCADE)
     portlet_id = models.PositiveIntegerField()
-    portlet = GenericForeignKey('portlet_type', 'portlet_id')
+    portlet = GenericForeignKey("portlet_type", "portlet_id")
 
     position = models.PositiveSmallIntegerField(_("Position"), default=999)
 
     class Meta:
         app_label = "portlets"
         ordering = ["position"]
-        verbose_name_plural = _(u"Portlet assignments")
+        verbose_name_plural = _("Portlet assignments")
 
     def __str__(self):
         try:
@@ -53,13 +52,13 @@ class PortletAssignment(models.Model):
 
 
 class PortletBlocking(models.Model):
-    """Blocks portlets for given slot and content object.
-    """
-    slot = models.ForeignKey("Slot", verbose_name=_(u"Slot"), on_delete=models.CASCADE)
+    """Blocks portlets for given slot and content object."""
+
+    slot = models.ForeignKey("Slot", verbose_name=_("Slot"), on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, related_name="pb_content", on_delete=models.CASCADE)
     content_id = models.PositiveIntegerField()
-    content = GenericForeignKey('content_type', 'content_id')
+    content = GenericForeignKey("content_type", "content_id")
 
     class Meta:
         app_label = "portlets"
@@ -87,14 +86,15 @@ class PortletRegistration(models.Model):
 
         * active
             If true the portlet will be provided to assign to content object
-     """
-    type = models.CharField(_(u"Type"), max_length=30, unique=True)
-    name = models.CharField(_(u"Name"), max_length=50, unique=True)
-    active = models.BooleanField(_(u"Active"), default=True)
+    """
+
+    type = models.CharField(_("Type"), max_length=30, unique=True)
+    name = models.CharField(_("Name"), max_length=50, unique=True)
+    active = models.BooleanField(_("Active"), default=True)
 
     class Meta:
         app_label = "portlets"
-        ordering = ("name", )
+        ordering = ("name",)
 
     def __str__(self):
         return "%s %s" % (self.type, self.name)
@@ -104,6 +104,7 @@ class Slot(models.Model):
     """
     Slots are places to which portlets can be assigned.
     """
+
     name = models.CharField(_("Name"), max_length=50)
 
     class Meta:
@@ -124,7 +125,8 @@ class Slot(models.Model):
         """
         ctype = ContentType.objects.get_for_model(obj)
         portlet_assignments = PortletAssignment.objects.filter(
-            slot=self, content_type=ctype.id, content_id=obj.id).order_by("position")
+            slot=self, content_type=ctype.id, content_id=obj.id
+        ).order_by("position")
 
         portlets = []
         for portlet_assignment in portlet_assignments:
